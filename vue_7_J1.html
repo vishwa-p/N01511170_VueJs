@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+	
+		<title>J1 Practice</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<style>
+			.formfield{margin-bottom:10px;}
+		</style>
+	</head>
+	<body>
+	<p>Winning Score <a href="https://cemc.uwaterloo.ca/contests/computing/2019/stage%201/juniorEF.pdf">from the J1 problem hosted by the CCC.</a></p>
+	<div id="app">
+        <h2>Team Apple:</h2>
+		<div class="formfield">
+			<label> Shot: <label> <input v-model="shot_apple">
+		</div>
+		<div class="formfield">
+			<label>Field goal: <label> <input v-model="fieldgoal_apple">
+		</div>
+		<div class="formfield">
+			<label>Free throw: <label> <input v-model="freethrow_apple">
+		</div>
+		<div id="result">
+			<div>Treat Total: {{treat_total_apple}}</div>
+		</div>
+	
+	
+        <h2>Team Banana:</h2>
+		<div class="formfield">
+			<label> Shot: <label> <input v-model="shot_banana">
+		</div>
+		<div class="formfield">
+			<label>Field goal: <label> <input v-model="fieldgoal_banana">
+		</div>
+		<div class="formfield">
+			<label>Free throw: <label> <input v-model="freethrow_banana">
+		</div>
+		<div id="result">
+			<div>Treat Total: {{treat_total_banana}}</div>
+		</div>
+	
+	<div v-if="winner=='Apple'">
+		<span><b>Team Apple Won</b></span>
+	</div>
+	<div v-if="winner=='Banana'">
+		<span><b>Team Banana Won</b></span>
+	</div>
+	<div v-if="winner=='tie'">
+		<span><b>It's tie!</b></span>
+	</div>
+</div>
+	<script>
+	var app = new Vue({
+		el: '#app',
+		data:{
+			shot_apple:0,
+			fieldgoal_apple:0,
+			freethrow_apple:0,
+			shot_value_apple:3,
+			fieldgoal_value_apple:2,
+			freethrow_value_apple:1,
+			shot_banana:0,
+			fieldgoal_banana:0,
+			freethrow_banana:0,
+			shot_value_banana:3,
+			fieldgoal_value_banana:2,
+			freethrow_value_banana:1
+		},
+		computed:{
+			treat_total_apple:function(){
+				return (this.shot_apple * this.shot_value_apple) + 
+				(this.fieldgoal_apple * this.fieldgoal_value_apple) + 
+				(this.freethrow_apple * this.freethrow_value_apple);	
+			},
+			
+			treat_total_banana:function(){
+				return (this.shot_banana * this.shot_value_banana) + 
+				(this.fieldgoal_banana * this.fieldgoal_value_banana) + 
+				(this.freethrow_banana * this.freethrow_value_banana);	
+			},
+
+			winner:function(){
+				if(this.shot_apple!=0 && this.fieldgoal_apple!=0 && this.freethrow_apple!=0 && this.shot_banana!=0 && this.fieldgoal_banana!=0 && this.freethrow_banana!=0){
+				if(this.treat_total_apple>this.treat_total_banana){
+					return "Apple";
+				}
+				else if(this.treat_total_banana>this.treat_total_apple){
+					return "Banana";
+				}
+				else if(this.treat_total_apple==this.treat_total_banana){
+					return "tie";
+				}
+			}
+			return "";
+			}
+		}
+	});
+    
+	// var app1 = new Vue({
+	// 	el: '#app1',
+	// 	data:{
+	// 		shot:0,
+	// 		fieldgoal:0,
+	// 		freethrow:0,
+	// 		shot_value:3,
+	// 		fieldgoal_value:2,
+	// 		freethrow_value:1
+	// 	},
+	// 	computed:{
+	// 		treat_total_banana:function(){
+	// 			return (this.shot * this.shot_value) + 
+	// 			(this.fieldgoal * this.fieldgoal_value) + 
+	// 			(this.freethrow * this.freethrow_value);	
+	// 		},
+			
+	// 	}
+	// });
+	
+	</script>
+	<!--
+		v-model will allow you to quickly bind form elements to the data property.
+		Make sure to set a default value!
+		The Computed property can be used like data, except for values that are calculated from data properties.
+		In this example 'treat_total_apple' is computed from data properties, and 'is_happy' is computed from 'treat_total_apple'.
+		
+		ASYNCHRONOUS LEARNING EXERCISE : J1
+		- Find any J1 problem
+		- Imagine an interface that allows the user to enter data on the webpage
+		- Build using v-model and computed properties!
+	
+	-->
+	</body>
+</html>
